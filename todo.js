@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const readline = require('readline');
+const chalk = require('chalk');
 
 const todosPath = path.join(__dirname, 'todos.json');
 
@@ -33,8 +34,9 @@ function handleMenu(choice) {
       if (todos.length === 0) {
         console.log('暂无待办事项');
       } else {
+        // 显示待办列表
         todos.forEach((todo, idx) => {
-          console.log(`${idx + 1}. ${todo}`);
+          console.log(`${chalk.yellow(idx + 1)}. ${chalk.cyan(todo)}`);
         });
       }
       showMenu();
@@ -43,7 +45,8 @@ function handleMenu(choice) {
       rl.question('输入待办内容: ', (item) => {
         todos.push(item);
         saveTodos(todos);
-        console.log('添加成功');
+        // 添加成功
+        console.log(chalk.green('添加成功'));
         showMenu();
       });
       break;
@@ -53,9 +56,11 @@ function handleMenu(choice) {
         if (todos[idx]) {
           todos.splice(idx, 1);
           saveTodos(todos);
-          console.log('删除成功');
+          // 删除成功
+          console.log(chalk.green('删除成功'));
         } else {
-          console.log('编号无效');
+          // 编号无效
+          console.log(chalk.red('编号无效'));
         }
         showMenu();
       });
